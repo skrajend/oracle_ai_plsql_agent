@@ -1,0 +1,23 @@
+BEGIN
+    plsql_agent.generate_and_execute(
+        'Find out the total number of records in table all_objects'
+      );
+END;
+
+Captured Output:
+Generated PL/SQL Code:
+
+DECLARE
+  v_result NUMBER;
+BEGIN
+  v_result := 0;
+  SELECT COUNT(*) INTO v_result FROM all_objects;
+  DBMS_OUTPUT.PUT_LINE('Result: ' || v_result);
+END;
+
+Result: 33437
+
+
+Statement processed.
+
+75.39 seconds
