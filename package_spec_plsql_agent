@@ -1,0 +1,16 @@
+create or replace PACKAGE plsql_agent AS
+
+  -- Function to capture DBMS_OUTPUT
+
+  TYPE dbms_output_rec IS RECORD ( line VARCHAR2(32767) );
+  TYPE dbms_output_tab IS TABLE OF dbms_output_rec;
+
+  FUNCTION DBMS_OUTPUT_GET RETURN dbms_output_tab PIPELINED;
+
+  -- Procedure to generate and execute PL/SQL code using LLM
+  PROCEDURE generate_and_execute(
+    p_user_input IN VARCHAR2
+  );
+
+END plsql_agent;
+/
