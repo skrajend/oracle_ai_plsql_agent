@@ -1,0 +1,29 @@
+BEGIN
+    plsql_agent.generate_and_execute(
+        'Choose three random numbers between 10-20 , add them up and divide them with the mean of the three numbers.'
+      );
+END;
+
+Captured Output:
+Generated PL/SQL Code:
+
+DECLARE
+  v_result NUMBER;
+  v_num1 NUMBER;
+  v_num2 NUMBER;
+  v_num3 NUMBER;
+BEGIN
+  v_result := 0;
+  v_num1 := DBMS_RANDOM.VALUE(10, 20);
+  v_num2 := DBMS_RANDOM.VALUE(10, 20);
+  v_num3 := DBMS_RANDOM.VALUE(10, 20);
+  v_result := (v_num1 + v_num2 + v_num3) / ((v_num1 + v_num2 + v_num3) / 3);
+  DBMS_OUTPUT.PUT_LINE('Result: ' || v_result);
+END;
+
+Result: 3
+
+
+Statement processed.
+
+4.76 seconds
