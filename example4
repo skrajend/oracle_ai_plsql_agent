@@ -1,6 +1,9 @@
 BEGIN
     plsql_agent.generate_and_execute(
-        'Simulate a payroll system where 12 employees have different tax brackets. Calculate net salaries after applying tax rates of 10%, 20%, or 30% based on income levels. Employees with net salaries above 5000 should receive a 7% bonus, while those below 3000 receive a fixed 500 bonus. If an employee’s total compensation exceeds 10000, deduct a special tax of 5%. Output the final payroll report.'
+        'Simulate a payroll system where 12 employees have different tax brackets. 
+         Calculate net salaries after applying tax rates of 10%, 20%, or 30% based on income levels. 
+         Employees with net salaries above 5000 should receive a 7% bonus, while those below 3000 receive a fixed 500 bonus. 
+         If an employee’s total compensation exceeds 10000, deduct a special tax of 5%. Output the final payroll report.'
       );
 END;
 
