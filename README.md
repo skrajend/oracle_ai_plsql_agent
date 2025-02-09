@@ -78,7 +78,7 @@ credential_name: The name of the credential you created in step 1.
 oci_compartment_id: The OCID of the compartment.
 object_list: An optional list of objects (not used in this example).
 oci_apiformat: Specifies the API format ("GENERIC" for general-purpose use).
-model: The specific LLM model to use (Meta's LLaMA 3 model). Note: I've updated the model name to a more likely valid name, meta.llama3.70b-instruct. You may need to verify the exact model name available in your OCI region. The provided meta.llama-3.1-405b-instruct is unlikely to be a valid model identifier.
+model: The specific LLM model to use (Meta's LLaMA 3 model). Note: Choose appropriate model from OCI
 
 Install the PL/SQL Agent
 Create the plsql_agent package (specification and body) in your database schema.  Copy and paste the code you provided in your question into your SQL Developer, SQLcl, or other database client.
