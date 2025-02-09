@@ -206,10 +206,11 @@ To use the agent, call the generate_and_execute procedure with your natural lang
 
 SQL
 
-BEGIN
+```sqlBEGIN
   plsql_agent.generate_and_execute(p_user_input => 'Calculate the sum of numbers from 1 to 10.');
 END;
 /
+```
 SQL
 
 Expected Output (Example):
@@ -221,6 +222,7 @@ Captured Output: The result of executing the generated code, including any DBMS_
 For the "sum of numbers from 1 to 10" example, you might see something like this (the exact generated code may vary slightly):
 
 Generated PL/SQL Code:
+```sql
 DECLARE
   v_result NUMBER := 0;
 BEGIN
@@ -232,7 +234,7 @@ END;
 
 Captured Output:
 Result: 55
-
+```
 
 Code Explanation
 * DBMS_OUTPUT_GET Function: This pipelined function retrieves lines from the DBMS_OUTPUT buffer. Pipelined functions allow you to process results row-by-row as they become available, which is efficient for handling potentially large amounts of output.
