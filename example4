@@ -1,0 +1,78 @@
+BEGIN
+    plsql_agent.generate_and_execute(
+        'Simulate a payroll system where 12 employees have different tax brackets. Calculate net salaries after applying tax rates of 10%, 20%, or 30% based on income levels. Employees with net salaries above 5000 should receive a 7% bonus, while those below 3000 receive a fixed 500 bonus. If an employee’s total compensation exceeds 10000, deduct a special tax of 5%. Output the final payroll report.'
+      );
+END;
+
+Captured Output:
+Generated PL/SQL Code:
+
+DECLARE
+    v_result NUMBER := 0;
+    TYPE employee_array IS TABLE OF NUMBER;
+    salaries employee_array := employee_array(2500, 3500, 8000, 4000, 6000, 4500, 9000, 5500, 7000, 3000, 10000, 12000);
+    net_salaries employee_array := employee_array();
+    bonuses employee_array := employee_array();
+    special_tax employee_array := employee_array();
+    total_compensation employee_array := employee_array();
+
+BEGIN
+    FOR i IN 1..salaries.COUNT LOOP
+        IF salaries(i) <= 3000 THEN
+            net_salaries.EXTEND;
+            net_salaries(i) := salaries(i) * 0.9;
+        ELSIF salaries(i) <= 6000 THEN
+            net_salaries.EXTEND;
+            net_salaries(i) := salaries(i) * 0.8;
+        ELSE
+            net_salaries.EXTEND;
+            net_salaries(i) := salaries(i) * 0.7;
+        END IF;
+
+        IF net_salaries(i) > 5000 THEN
+            bonuses.EXTEND;
+            bonuses(i) := net_salaries(i) * 0.07;
+        ELSIF net_salaries(i) < 3000 THEN
+            bonuses.EXTEND;
+            bonuses(i) := 500;
+        ELSE
+            bonuses.EXTEND;
+            bonuses(i) := 0;
+        END IF;
+
+        total_compensation.EXTEND;
+        total_compensation(i) := net_salaries(i) + bonuses(i);
+
+        IF total_compensation(i) > 10000 THEN
+            special_tax.EXTEND;
+            special_tax(i) := total_compensation(i) * 0.05;
+        ELSE
+            special_tax.EXTEND;
+            special_tax(i) := 0;
+        END IF;
+
+        DBMS_OUTPUT.PUT_LINE('Employee ' || i || ': Salary = ' || salaries(i) || ', Net Salary = ' || net_salaries(i) || ', Bonus = ' || bonuses(i) || ', Special Tax = ' || special_tax(i) || ', Total Compensation = ' || (total_compensation(i) - special_tax(i)));
+    END LOOP;
+
+    v_result := 1;
+    DBMS_OUTPUT.PUT_LINE('Result: ' || v_result);
+END;
+
+Employee 1: Salary = 2500, Net Salary = 2250, Bonus = 500, Special Tax = 0, Total Compensation = 2750
+Employee 2: Salary = 3500, Net Salary = 2800, Bonus = 500, Special Tax = 0, Total Compensation = 3300
+Employee 3: Salary = 8000, Net Salary = 5600, Bonus = 392, Special Tax = 0, Total Compensation = 5992
+Employee 4: Salary = 4000, Net Salary = 3200, Bonus = 0, Special Tax = 0, Total Compensation = 3200
+Employee 5: Salary = 6000, Net Salary = 4800, Bonus = 0, Special Tax = 0, Total Compensation = 4800
+Employee 6: Salary = 4500, Net Salary = 3600, Bonus = 0, Special Tax = 0, Total Compensation = 3600
+Employee 7: Salary = 9000, Net Salary = 6300, Bonus = 441, Special Tax = 0, Total Compensation = 6741
+Employee 8: Salary = 5500, Net Salary = 4400, Bonus = 0, Special Tax = 0, Total Compensation = 4400
+Employee 9: Salary = 7000, Net Salary = 4900, Bonus = 0, Special Tax = 0, Total Compensation = 4900
+Employee 10: Salary = 3000, Net Salary = 2700, Bonus = 500, Special Tax = 0, Total Compensation = 3200
+Employee 11: Salary = 10000, Net Salary = 7000, Bonus = 490, Special Tax = 0, Total Compensation = 7490
+Employee 12: Salary = 12000, Net Salary = 8400, Bonus = 588, Special Tax = 0, Total Compensation = 8988
+Result: 1
+
+
+Statement processed.
+
+17.41 seconds
