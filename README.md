@@ -82,7 +82,7 @@ Install the PL/SQL Agent
 Create the plsql_agent package (specification and body) in your database schema.  Copy and paste the code you provided in your question into your SQL Developer, SQLcl, or other database client.
 
 
-```
+```sql
 create or replace PACKAGE plsql_agent AS
 
   -- Function to capture DBMS_OUTPUT
@@ -101,7 +101,7 @@ END plsql_agent;
 /
 ```
 
-```
+```sql
 create or replace PACKAGE BODY plsql_agent AS
 
   FUNCTION DBMS_OUTPUT_GET RETURN dbms_output_tab PIPELINED AS
