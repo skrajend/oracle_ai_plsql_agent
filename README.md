@@ -241,12 +241,12 @@ Code Explanation
 * DBMS_OUTPUT_GET Function: This pipelined function retrieves lines from the DBMS_OUTPUT buffer. Pipelined functions allow you to process results row-by-row as they become available, which is efficient for handling potentially large amounts of output.
 
 * generate_and_execute Procedure:
-* * Prompt Construction: A generic prompt is created, instructing the LLM to generate a valid PL/SQL block with specific requirements (variable name, output format, etc.). The user's input is appended to this prompt.
-* * LLM Call: DBMS_CLOUD_AI.GENERATE is called to interact with the LLM. The prompt, profile_name, and action ('chat') are passed as parameters.
-* * Response Cleaning: The LLM's response is cleaned by removing backticks (often used for code formatting in Markdown) and any leading "sql" prefix.
-* * Code Execution: EXECUTE IMMEDIATE is used to execute the dynamically generated PL/SQL code. A local variable v_result is declared to ensure that the generated code has a variable to work with.
-* * Output Capture: The DBMS_OUTPUT_GET function is used within a BULK COLLECT operation to efficiently retrieve all lines from the DBMS_OUTPUT buffer into a PL/SQL table. The lines are then concatenated into a single string for display.
-* * Error Handling: A WHEN OTHERS exception handler is included to catch any errors during code execution and display the error message.
+ * Prompt Construction: A generic prompt is created, instructing the LLM to generate a valid PL/SQL block with specific requirements (variable name, output format, etc.). The user's input is appended to this prompt.
+ * LLM Call: DBMS_CLOUD_AI.GENERATE is called to interact with the LLM. The prompt, profile_name, and action ('chat') are passed as parameters.
+ * Response Cleaning: The LLM's response is cleaned by removing backticks (often used for code formatting in Markdown) and any leading "sql" prefix.
+ * Code Execution: EXECUTE IMMEDIATE is used to execute the dynamically generated PL/SQL code. A local variable v_result is declared to ensure that the generated code has a variable to work with.
+ * Output Capture: The DBMS_OUTPUT_GET function is used within a BULK COLLECT operation to efficiently retrieve all lines from the DBMS_OUTPUT buffer into a PL/SQL table. The lines are then concatenated into a single string for display.
+ * Error Handling: A WHEN OTHERS exception handler is included to catch any errors during code execution and display the error message.
 
 Troubleshooting
 * ORA-40441: JSON syntax error: If you get this error during DBMS_CLOUD_AI.CREATE_PROFILE, double-check the JSON syntax in the attributes parameter. Ensure you have valid quotes, colons, and commas. Use a JSON validator online to check for errors.
