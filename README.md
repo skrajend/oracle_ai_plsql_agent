@@ -53,7 +53,8 @@ Important Security Note:  The example above shows how to create the credential. 
 Create an AI Profile
 Next, create an AI profile that specifies the LLM provider, model, and other settings.  Replace <<compartment_id>> with the OCID of the compartment where you want to create the profile.
 
-BEGIN
+```sql
+   BEGIN
   DBMS_CLOUD_AI.CREATE_PROFILE(
     profile_name => 'OCI_META_LLAMA',
     attributes   => '{"provider": "oci",
@@ -66,6 +67,7 @@ BEGIN
   );
 END;
 /
+```
 
 Explanation of Attributes:
 
