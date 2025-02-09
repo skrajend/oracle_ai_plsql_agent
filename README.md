@@ -206,7 +206,8 @@ To use the agent, call the generate_and_execute procedure with your natural lang
 
 SQL
 
-```sqlBEGIN
+```sql
+BEGIN
   plsql_agent.generate_and_execute(p_user_input => 'Calculate the sum of numbers from 1 to 10.');
 END;
 /
