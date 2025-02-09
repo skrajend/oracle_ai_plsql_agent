@@ -1,0 +1,83 @@
+Oracle Package's for finding Current Weather and Forecast
+
+select weather_package.get_current_weather('Ooty') from dual;
+{"date":"2025-02-09","time":"12:45","temperature_2m":21.3}
+
+select weather_package.get_forecast_weather('Coimbatore') from dual;
+{"date":"2025-02-10","temperature_2m_max":31.4,"temperature_2m_min":19.9}
+
+
+BEGIN
+    plsql_agent.generate_and_execute(
+        'In the database there are two functions available.'||
+        ' - weather_package.get_current_weather , it takes input a location to return the current weather , example : weather_package.get_current_weather(''Ooty'') , sample output {"date":"2025-02-09","time":"12:00","temperature_2m":21}'||
+        ' - weather_package.get_forecast_weather , it takes input a location to return the forecast weather , example : weather_package.get_forecast_weather(''Ooty'') , sample output {"date":"2025-02-10","temperature_2m_max":21.2,"temperature_2m_min":9.5}'||
+        'Use functions as necessary.'||
+        'Prompt : I am planning a 3-day trip starting next week to one of the hill stations in Tamil Nadu: Ooty, Coonoor, or Kodaikanal.  I prefer cooler weather and would like to minimize the chances of rain.  ' ||
+        'Can you analyze the weather forecast for these locations for the next 7 days and recommend the best place to visit? ' ||
+        'Consider the following factors: ' ||
+        '**Temperature:** I prefer a place with average daily temperatures below 25 degrees Celsius.  Lower is better. ' ||
+        'Provide a summary explaining your recommendation, including the expected weather conditions (temperature range and rain forecast) for the chosen location during my trip.  Also, mention the current date and time for which the forecast is being generated.  If possible, include the actual function calls you made to retrieve the data.'
+    );
+END;
+
+Captured Output:
+Generated PL/SQL Code:
+
+DECLARE
+    v_result NUMBER := 0;
+    v_ootty_forecast VARCHAR2(1000);
+    v_coonoor_forecast VARCHAR2(1000);
+    v_kodaikanal_forecast VARCHAR2(1000);
+    v_ootty_current VARCHAR2(1000);
+    v_coonoor_current VARCHAR2(1000);
+    v_kodaikanal_current VARCHAR2(1000);
+    v_ootty_avg_temp NUMBER := 0;
+    v_coonoor_avg_temp NUMBER := 0;
+    v_kodaikanal_avg_temp NUMBER := 0;
+BEGIN
+    v_ootty_forecast := weather_package.get_forecast_weather('Ooty');
+    v_coonoor_forecast := weather_package.get_forecast_weather('Coonoor');
+    v_kodaikanal_forecast := weather_package.get_forecast_weather('Kodaikanal');
+    
+    v_ootty_current := weather_package.get_current_weather('Ooty');
+    v_coonoor_current := weather_package.get_current_weather('Coonoor');
+    v_kodaikanal_current := weather_package.get_current_weather('Kodaikanal');
+    
+    -- Parse JSON forecast data to calculate average temperature
+    v_ootty_avg_temp := (JSON_VALUE(v_ootty_forecast, '$.temperature_2m_max') + JSON_VALUE(v_ootty_forecast, '$.temperature_2m_min')) / 2;
+    v_coonoor_avg_temp := (JSON_VALUE(v_coonoor_forecast, '$.temperature_2m_max') + JSON_VALUE(v_coonoor_forecast, '$.temperature_2m_min')) / 2;
+    v_kodaikanal_avg_temp := (JSON_VALUE(v_kodaikanal_forecast, '$.temperature_2m_max') + JSON_VALUE(v_kodaikanal_forecast, '$.temperature_2m_min')) / 2;
+    
+    IF v_ootty_avg_temp < 25 AND v_ootty_avg_temp < v_coonoor_avg_temp AND v_ootty_avg_temp < v_kodaikanal_avg_temp THEN
+        DBMS_OUTPUT.PUT_LINE('Recommended location: Ooty');
+        DBMS_OUTPUT.PUT_LINE('Current date and time: ' || JSON_VALUE(v_ootty_current, '$.date') || ' ' || JSON_VALUE(v_ootty_current, '$.time'));
+        DBMS_OUTPUT.PUT_LINE('Expected temperature range: ' || JSON_VALUE(v_ootty_forecast, '$.temperature_2m_min') || ' - ' || JSON_VALUE(v_ootty_forecast, '$.temperature_2m_max'));
+        v_result := 1;
+    ELSIF v_coonoor_avg_temp < 25 AND v_coonoor_avg_temp < v_ootty_avg_temp AND v_coonoor_avg_temp < v_kodaikanal_avg_temp THEN
+        DBMS_OUTPUT.PUT_LINE('Recommended location: Coonoor');
+        DBMS_OUTPUT.PUT_LINE('Current date and time: ' || JSON_VALUE(v_coonoor_current, '$.date') || ' ' || JSON_VALUE(v_coonoor_current, '$.time'));
+        DBMS_OUTPUT.PUT_LINE('Expected temperature range: ' || JSON_VALUE(v_coonoor_forecast, '$.temperature_2m_min') || ' - ' || JSON_VALUE(v_coonoor_forecast, '$.temperature_2m_max'));
+        v_result := 2;
+    ELSIF v_kodaikanal_avg_temp < 25 AND v_kodaikanal_avg_temp < v_ootty_avg_temp AND v_kodaikanal_avg_temp < v_coonoor_avg_temp THEN
+        DBMS_OUTPUT.PUT_LINE('Recommended location: Kodaikanal');
+        DBMS_OUTPUT.PUT_LINE('Current date and time: ' || JSON_VALUE(v_kodaikanal_current, '$.date') || ' ' || JSON_VALUE(v_kodaikanal_current, '$.time'));
+        DBMS_OUTPUT.PUT_LINE('Expected temperature range: ' || JSON_VALUE(v_kodaikanal_forecast, '$.temperature_2m_min') || ' - ' || JSON_VALUE(v_kodaikanal_forecast, '$.temperature_2m_max'));
+        v_result := 3;
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('No location meets the temperature criteria.');
+        v_result := 0;
+    END IF;
+    
+    DBMS_OUTPUT.PUT_LINE('Result: ' || v_result);
+END;
+
+Recommended location: Ooty
+Current date and time: 2025-02-09 12:45
+Expected temperature range: 9.5 - 21.2
+Result: 1
+
+
+Statement processed.
+
+32.70 seconds
