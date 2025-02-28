@@ -50,6 +50,12 @@ create or replace PACKAGE BODY plsql_agent AS
       v_llm_response := TRIM(v_llm_response); -- remove any leading spaces after "sql"
     END IF;
 
+    -- Remove "plsql" prefix if present
+    IF SUBSTR(v_llm_response, 1, 5) = 'plsql' THEN
+      v_llm_response := SUBSTR(v_llm_response, 6);
+      v_llm_response := TRIM(v_llm_response); -- remove any leading spaces after "sql"
+    END IF;
+
      -- Trim any extra space at the end
      v_llm_response := RTRIM(v_llm_response);
 
