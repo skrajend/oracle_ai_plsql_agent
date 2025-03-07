@@ -1,4 +1,4 @@
-Oracle Package's for finding Current Weather and Forecast
+Oracle Custom Package's for finding Current Weather and Forecast ( you have to write your own tools )
 
 select weather_package.get_current_weather('Ooty') from dual;
 {"date":"2025-02-09","time":"12:45","temperature_2m":21.3}
