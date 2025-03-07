@@ -6,6 +6,8 @@ select weather_package.get_current_weather('Ooty') from dual;
 select weather_package.get_forecast_weather('Coimbatore') from dual;
 {"date":"2025-02-10","temperature_2m_max":31.4,"temperature_2m_min":19.9}
 
+Note : The above two tools uses duckduckgo search api for finding the co-ordinates and then weather api to extract based on the co-ordinates. you can write your own tools based on your requirement.
+
 
 BEGIN
     plsql_agent.generate_and_execute(
